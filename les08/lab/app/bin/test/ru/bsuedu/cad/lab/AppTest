@@ -1,0 +1,10 @@
+package ru.bsuedu.cad.lab;
+
+import org.junit.jupiter.api.Test;
+
+class AppTest {
+    @Test
+    void appHasAGreeting() {
+        throw new Error("Unresolved compilation problem: \n\tThe method getGreeting() is undefined for the type App\n");
+    }
+}
