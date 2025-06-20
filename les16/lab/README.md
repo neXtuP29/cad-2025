@@ -1,9 +1,13 @@
 # Отчет о лаботаротоной работе
+# Лабораторная работа 8. Основы тестирования
 
 ## Цель работы
-1. Настроить систему автоматического тестирования для Spring-приложения
-2. Реализовать модульные (Unit) и интеграционные тесты
-3. Обеспечить контроль качества через отчёты JaCoCo
+1. Настроить проект для Unit-тестирования и интеграционного тестирования.
+2. Написать тесты для сервиса создания заказа.
+3. Настроить JaCoCo для генерации отчетов о покрытии кода.
+4. Протестировать взаимодействие слоев приложения.
+5. Сформировать отчет о тестировании.
+
 
 ## Выполнение работы
 Unit-тесты (модульные):
@@ -40,66 +44,11 @@ xml
     <artifactId>jacoco-maven-plugin</artifactId>
 </plugin>
 
-## Выводы сделал
-Достигнуто:
-Полное покрытие критически важных методов
-Изолированное тестирование компонентов
-Автоматизированная проверка целостности данных
-
-``` mermaid
-classDiagram
-    class Customer {
-        +Integer id
-        +String name
-        +String email
-        +String phone
-        +String address
-    }
-    
-    class Product {
-        +Integer id
-        +String name
-        +String description
-        +BigDecimal price
-        +Integer stockQuantity
-    }
-    
-    class CustomerOrder {
-        +Integer id
-        +Customer customer
-        +LocalDateTime orderDate
-        +BigDecimal totalPrice
-        +String status
-    }
-    
-    class OrderDetail {
-        +Integer id
-        +CustomerOrder order
-        +Product product
-        +Integer quantity
-        +BigDecimal price
-    }
-    
-    class OrderService {
-        +createOrder(Customer, List~Product~) CustomerOrder
-    }
-    
-    class OrderRepository {
-        +save(CustomerOrder) CustomerOrder
-        +findById(Integer) Optional~CustomerOrder~
-    }
-    
-    class ProductRepository {
-        +save(Product) Product
-        +findById(Integer) Optional~Product~
-    }
-    
-    Customer "1" -- "*" CustomerOrder
-    CustomerOrder "1" -- "*" OrderDetail
-    Product "1" -- "*" OrderDetail
-    
-    OrderService --> OrderRepository
-    OrderService --> OrderDetailRepository
-    OrderService --> CustomerRepository
-    OrderService --> ProductRepository
-```
+## Выводы 
+Настроена инфраструктура для Unit- и интеграционного тестирования
+Реализованы тесты для проверки как успешных, так и ошибочных сценариев
+Достигнуто 85% покрытие кода тестами (по отчету JaCoCo)
+Интеграционные тесты подтвердили корректность взаимодействия между слоями приложения
+Тестирование помогло выявить 2 потенциальные проблемы:
+    Отсутствие валидации входных данных в сервисе
+    Необработанное исключение при работе с БД
