@@ -1,11 +1,12 @@
 # Отчет о лаботаротоной работе
+# Лабораторная работа 5. Разработка и развертывание Web-приложений
 
 ## Цель работы
-Создать веб-интерфейс для приложения магазина зоотоваров
-Реализовать функционал просмотра и создания заказов через сервлеты
-Настроить развертывание приложения на сервере Apache Tomcat
-Обеспечить взаимодействие с REST API
-
+1. Развертывание Apache Tomcat 11
+2. Создание WAR-артефакта
+3. Разработка веб-интерфейса для работы с заказами
+4. Реализация REST API для продуктов
+5. Деплой приложения на сервер приложений
 ## Выполнение работы
 
 1. Подготовка окружения
@@ -72,79 +73,11 @@ bash
 gradle war
 Деплой zoo-shop.war через Tomcat Manager
 
-## Выводы сделал
-Реализовано полноценное веб-приложение с:
-Интерфейсом на сервлетах
-REST API для интеграции
-Взаимосвязанными сущностями заказов и товаров
-Настроен процесс CI/CD:
-Автоматическая сборка WAR-файла
-Деплой на Tomcat
-Достигнуты цели работы:
-Рабочий веб-интерфейс
-Корректное взаимодействие с БД
-Готовность к масштабированию
-
-``` mermaid
-classDiagram
-    class Customer {
-        +Integer id
-        +String name
-        +String email
-        +String phone
-        +String address
-    }
-
-    class Product {
-        +Integer id
-        +String name
-        +String description
-        +BigDecimal price
-        +Integer stockQuantity
-    }
-
-    class Category {
-        +Integer id
-        +String name
-        +String description
-    }
-
-    class CustomerOrder {
-        +Integer id
-        +LocalDateTime orderDate
-        +BigDecimal totalPrice
-        +String status
-        +String shippingAddress
-        +addOrderDetail(OrderDetail)
-        +calculateTotalPrice() BigDecimal
-    }
-
-    class OrderDetail {
-        +Integer id
-        +Integer quantity
-        +BigDecimal price
-    }
-
-    class OrderListServlet {
-        +doGet(HttpServletRequest, HttpServletResponse)
-    }
-
-    class OrderFormServlet {
-        +doGet(HttpServletRequest, HttpServletResponse)
-        +doPost(HttpServletRequest, HttpServletResponse)
-    }
-
-    class ProductApiServlet {
-        +doGet(HttpServletRequest, HttpServletResponse)
-    }
-
-    Customer "1" -- "*" CustomerOrder : places
-    CustomerOrder "1" -- "*" OrderDetail : contains
-    OrderDetail "*" -- "1" Product : refers to
-    Product "1" -- "1" Category : belongs to
-    
-    OrderListServlet --> CustomerOrder : uses
-    OrderFormServlet --> Product : uses
-    OrderFormServlet --> Customer : uses
-    ProductApiServlet --> Product : uses
-```
+## Вывод
+Успешно настроен и развернут Apache Tomcat 11
+Приложение собрано в WAR-артефакт и деплоено на сервер
+Реализован веб-интерфейс для просмотра и создания заказов
+Создан REST API для получения информации о продуктах
+Протестирована работа API с помощью Postman
+Приложение корректно отображает страницы и обрабатывает запросы
+Сохранена вся бизнес-логика из предыдущих лабораторных работ
