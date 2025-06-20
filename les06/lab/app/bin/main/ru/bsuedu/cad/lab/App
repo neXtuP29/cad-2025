@@ -1,0 +1,16 @@
+package ru.bsuedu.cad.lab;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class App {
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(new Class[]{SpringConfig.class});
+        Renderer r = (Renderer)context.getBean("dataBaseRenderer", Renderer.class);
+        r.render();
+        context.close();
+    }
+
+    public Object getGreeting() {
+        throw new UnsupportedOperationException("Unimplemented method 'getGreeting'");
+    }
+}

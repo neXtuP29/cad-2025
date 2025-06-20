@@ -1,0 +1,77 @@
+package ru.bsuedu.cad.lab;
+
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component("htmlTableRenderer")
+public class HTMLTableRenderer implements Renderer {
+    private DataProvider<Product> provider;
+
+    @Autowired
+    public HTMLTableRenderer(DataProvider<Product> provider) {
+        this.provider = provider;
+    }
+
+    public void render() {
+        List<Product> products = this.provider.getItems();
+        File file = new File("src/main/resources/output.html");
+        StringBuilder htmlBuilder = new StringBuilder();
+        htmlBuilder.append("<!DOCTYPE html>\n<html lang=\"ru\">\n<head>\n\t<meta charset=\"UTF-8\">\n\t<title>HTML</title>\n\t<style>\n\ttable {\n\t\tborder-collapse: collapse;\n\t\twidth: auto;\n\t}\n\t\tth, td{\n\t\t\tborder: 1px solid black;\n\t\t\tpadding: 3px;\n\t\t\ttext-align: center;\n\t\t}\n\t</style>\n</head>\n<body lang=\"ru\">\n\t<table>\n\t\t<tr>\n\t\t\t<th>product_id</th>\n\t\t\t<th>name</th>\n\t\t\t<th>description</th>\n\t\t\t<th>category_id</th>\n\t\t\t<th>price</th>\n\t\t\t<th>stock_quantity</th>\n\t\t\t<th>image_url</th>\n\t\t\t<th>created_at</th>\n\t\t\t<th>updated_at</th>\n\t\t</tr>\n");
+
+        for(Product product : products) {
+            htmlBuilder.append("<tr>").append("<td>").append(String.format("%-2d", product.product_id)).append("</td>").append("<td>").append(String.format("%-33s", product.name)).append("</td>").append("<td>").append(String.format("%-38s", product.description)).append("</td>").append("<td>").append(product.category_id).append("</td>").append("<td>").append(String.format("%-4.0f", product.price)).append("</td>").append("<td>").append(String.format("%-3d", product.stock_quantity)).append("</td>").append("<td>").append(String.format("%-39s", product.image_url)).append("</td>").append("<td>").append((new SimpleDateFormat("yyyy-MM-dd")).format(product.created_at)).append("</td>").append("<td>").append((new SimpleDateFormat("yyyy-MM-dd")).format(product.updated_at)).append("</td>").append("</tr>");
+        }
+
+        htmlBuilder.append("\t</table>\n</body>\n</html>\n");
+
+        try {
+            Throwable e = null;
+            Object var21 = null;
+
+            try {
+                PrintWriter writer = new PrintWriter(file, "UTF-8");
+
+                try {
+                    writer.println(htmlBuilder.toString());
+                } finally {
+                    if (writer != null) {
+                        writer.close();
+                    }
+
+                }
+            } catch (Throwable var17) {
+                if (e == null) {
+                    e = var17;
+                } else if (e != var17) {
+                    e.addSuppressed(var17);
+                }
+
+                throw e;
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                if (file.exists()) {
+                    desktop.browse(file.toURI());
+                } else {
+                    System.err.println("Файл не найден");
+                }
+            } else {
+                System.err.println("Desktop API не поддерживается");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+}

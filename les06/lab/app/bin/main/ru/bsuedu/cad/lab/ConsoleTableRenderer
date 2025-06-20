@@ -1,0 +1,37 @@
+package ru.bsuedu.cad.lab;
+
+import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ConsoleTableRenderer implements Renderer {
+    private DataProvider<Product> provider;
+
+    @Autowired
+    public ConsoleTableRenderer(DataProvider<Product> provider) {
+        this.provider = provider;
+    }
+
+    public void render() {
+        List<Product> products = this.provider.getItems();
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+        for(Product product : products) {
+            PrintStream var10000 = System.out;
+            String var10001 = String.format("%-2d", product.product_id);
+            var10000.println("| " + var10001 + " | " + String.format("%-33s", product.name) + " | " + String.format("%-38s", product.description) + " | " + product.category_id + " | " + String.format("%-4.0f", product.price) + " | " + String.format("%-3d", product.stock_quantity) + " | " + String.format("%-39s", product.image_url) + "|" + this.getDate(product.created_at) + " | " + this.getDate(product.updated_at) + " |");
+            System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        }
+
+    }
+
+    public String getDate(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String format = formatter.format(date);
+        return format;
+    }
+}

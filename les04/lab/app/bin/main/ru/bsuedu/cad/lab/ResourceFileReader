@@ -1,0 +1,43 @@
+package ru.bsuedu.cad.lab;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ResourceFileReader implements Reader {
+    private Provider provider;
+
+    @Autowired
+    public ResourceFileReader(Provider provider) {
+        this.provider = provider;
+    }
+
+    @PostConstruct
+    public void init() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        String formattedDateTime = now.format(formatter);
+        System.out.println(String.format("The Bean has been fully initialized: " + formattedDateTime));
+    }
+
+    public String read() {
+        String path = this.provider.getFileName();
+
+        try {
+            return Files.readString(Paths.get(this.getClass().getClassLoader().getResource(path).toURI()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (URISyntaxException | IOException e) {
+            ((Exception)e).printStackTrace();
+            return null;
+        }
+    }
+}

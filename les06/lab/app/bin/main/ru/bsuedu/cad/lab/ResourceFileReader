@@ -1,0 +1,33 @@
+package ru.bsuedu.cad.lab;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ResourceFileReader implements Reader {
+    private Provider provider;
+
+    @Autowired
+    public ResourceFileReader(Provider provider) {
+        this.provider = provider;
+    }
+
+    public String read(String fileKey) {
+        String path = (String)this.provider.getFileName().get(fileKey);
+
+        try {
+            return Files.readString(Paths.get(this.getClass().getClassLoader().getResource(path).toURI()));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (URISyntaxException | IOException e) {
+            ((Exception)e).printStackTrace();
+            return null;
+        }
+    }
+}
