@@ -1,0 +1,73 @@
+package ru.bsuedu.cad.lab.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import java.math.BigDecimal;
+
+@Entity
+@Table(
+    name = "OrderDetails"
+)
+public class OrderDetail {
+    @Id
+    private Long orderDetailId;
+    private int quantity;
+    private BigDecimal price;
+    @ManyToOne
+    private Order order;
+    @ManyToOne
+    private Product product;
+
+    public OrderDetail() {
+    }
+
+    public OrderDetail(Long orderDetailId, int quantity, BigDecimal price, Order order, Product product) {
+        this.orderDetailId = orderDetailId;
+        this.quantity = quantity;
+        this.price = price;
+        this.order = order;
+        this.product = product;
+    }
+
+    public Long getOrderDetailId() {
+        return this.orderDetailId;
+    }
+
+    public void setOrderDetailId(Long orderDetailId) {
+        this.orderDetailId = orderDetailId;
+    }
+
+    public int getQuantity() {
+        return this.quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getPrice() {
+        return this.price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Order getOrder() {
+        return this.order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Product getProduct() {
+        return this.product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+}
