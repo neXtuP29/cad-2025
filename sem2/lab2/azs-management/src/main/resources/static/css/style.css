@@ -1,0 +1,122 @@
+/* Основные стили для всего приложения */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+/* Стили для карточек АЗС */
+.station-card {
+    border-left: 4px solid #007bff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.station-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.station-card.inactive {
+    opacity: 0.6;
+    background-color: #f8f9fa;
+    border-left-color: #6c757d;
+}
+
+/* Заголовки */
+h1 {
+    color: #343a40;
+    font-weight: 600;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+h3 {
+    color: #495057;
+    margin-bottom: 20px;
+}
+
+/* Кнопки */
+.btn-group .btn {
+    margin-right: 5px;
+}
+
+.btn-lg {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+}
+
+/* Формы */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #495057;
+}
+
+/* Статистика */
+.bg-light.rounded {
+    border: 1px solid #dee2e6;
+}
+
+/* Анимации */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .station-card .btn-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .station-card .btn {
+        margin-bottom: 5px;
+        margin-right: 0;
+    }
+}
+
+/* Улучшения для таблиц */
+.table th {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Специфические стили для элементов */
+.input-group-sm .form-control {
+    min-width: 100px;
+}
+
+.card-title {
+    color: #007bff;
+    font-weight: 600;
+}
+
+.text-success {
+    font-weight: 500;
+}
+
+.text-danger {
+    font-weight: 500;
+}
